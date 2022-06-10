@@ -45,36 +45,25 @@ void print(Node *head)
         temp = temp->next;
     }
 }
-
-int length(Node *head)
-{
-    Node *temp = head;
-    int i = 0;
-    while (temp != NULL)
-    {
-        temp = temp->next;
-        i++;
-    }
-    return i;
-}
-
-Node *append_LinkedList(Node *head, int n)
+Node *remDupes(Node *head)
 {
     // write your code here
-    Node *p = head;
-    Node *q = head;
-    for (int i = 1; i < length(head) - n; i++)
+    Node *t2 = head->next, *t1 = head;
+    while (t2)
     {
-        p = p->next;
+        if (t2->data == t1->data)
+        {
+            t1->next = t2->next;
+            Node *t = t2;
+            t2 = t2->next;
+            delete t;
+        }
+        else
+        {
+            t1 = t1->next;
+            t2 = t2->next;
+        }
     }
-    for (int i = 1; i < length(head); i++)
-    {
-        q = q->next;
-    }
-    q->next = head; // circular LL
-    head = p->next;
-    p->next = NULL; // breaking that circular LL
-
     return head;
 }
 
@@ -83,8 +72,6 @@ int main()
     Node *head = takeInput();
     print(head);
     cout << endl;
-    int len = length(head);
-    // cout << length(head);
-    Node *nh = append_LinkedList(head, 3);
+    Node *nh = remDupes(head);
     print(nh);
 }

@@ -45,37 +45,20 @@ void print(Node *head)
         temp = temp->next;
     }
 }
-
-int length(Node *head)
+Node *midPoint(Node *head)
 {
-    Node *temp = head;
-    int i = 0;
-    while (temp != NULL)
+    if (head == NULL || head->next == NULL)
     {
-        temp = temp->next;
-        i++;
+        return head;
     }
-    return i;
-}
-
-Node *append_LinkedList(Node *head, int n)
-{
-    // write your code here
-    Node *p = head;
-    Node *q = head;
-    for (int i = 1; i < length(head) - n; i++)
+    Node *slow = head;
+    Node *fast = head->next;
+    while (fast != NULL && fast->next != NULL)
     {
-        p = p->next;
+        slow = slow->next;
+        fast = fast->next->next;
     }
-    for (int i = 1; i < length(head); i++)
-    {
-        q = q->next;
-    }
-    q->next = head; // circular LL
-    head = p->next;
-    p->next = NULL; // breaking that circular LL
-
-    return head;
+    return slow;
 }
 
 int main()
@@ -83,8 +66,6 @@ int main()
     Node *head = takeInput();
     print(head);
     cout << endl;
-    int len = length(head);
-    // cout << length(head);
-    Node *nh = append_LinkedList(head, 3);
-    print(nh);
+    Node *mid = midPoint(head);
+    cout << mid->data;
 }
